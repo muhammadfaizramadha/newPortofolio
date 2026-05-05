@@ -1,0 +1,121 @@
+// ---- Scroll progress + sticky nav state ----
+const nav = document.getElementById('nav');
+const progress = document.getElementById('scrollProgress');
+const links = document.querySelectorAll('#navLinks a');
+const sectionIds = ['about', 'experience', 'work', 'stack'];
+
+function onScroll() {
+  const y = window.scrollY;
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  progress.style.width = Math.min(100, (y / h) * 100) + '%';
+  nav.classList.toggle('is-scrolled', y > 30);
+
+  let active = '';
+  sectionIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top;
+    if (top < 200) active = id;
+  });
+  links.forEach(a => {
+    a.classList.toggle('is-active', a.getAttribute('href') === '#' + active);
+  });
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+// ---- Reveal on scroll ----
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('is-visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// ---- Marquee ----
+const marqueeWords = [
+  'Web Development', 'Digital Transformation', 'Laravel', 'JavaScript',
+  'UI Engineering', 'Indonesia', 'Available 2026'
+];
+const track = document.getElementById('marqueeTrack');
+const buildMarquee = () => {
+  const html = marqueeWords.map(w => `<span class="marquee__item">${w}<span class="star">✦</span></span>`).join('');
+  track.innerHTML = html + html;
+};
+buildMarquee();
+
+// ---- Experience accordion ----
+document.querySelectorAll('.exp__row').forEach(row => {
+  row.addEventListener('click', () => {
+    const isOpen = row.classList.contains('is-open');
+    document.querySelectorAll('.exp__row').forEach(r => r.classList.remove('is-open'));
+    if (!isOpen) row.classList.add('is-open');
+  });
+});
+
+// ---- Project filter ----
+document.querySelectorAll('#projFilter .filter-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#projFilter .filter-chip').forEach(c => c.classList.remove('is-active'));
+    chip.classList.add('is-active');
+    const f = chip.dataset.filter;
+    document.querySelectorAll('.proj-card').forEach(card => {
+      const show = f === 'all' || card.dataset.cat === f;
+      card.style.display = show ? '' : 'none';
+    });
+  });
+});
+
+// ---- CV stub ----
+document.getElementById('downloadCv').addEventListener('click', (e) => {
+  e.preventDefault();
+  const btn = e.currentTarget;
+  const original = btn.innerHTML;
+  btn.innerHTML = 'Preparing… <span class="arr">↓</span>';
+  setTimeout(() => {
+    btn.innerHTML = 'CV ready ✓';
+    setTimeout(() => { btn.innerHTML = original; }, 1600);
+  }, 800);
+});
+
+// ---- Contact form validation ----
+const form = document.getElementById('contactForm');
+const submit = document.getElementById('formSubmit');
+const success = document.getElementById('formSuccess');
+const setErr = (k, msg) => {
+  form.querySelector(`[data-err="${k}"]`).textContent = msg || '';
+};
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  let ok = true;
+  const data = new FormData(form);
+  const name = (data.get('name') || '').toString().trim();
+  const email = (data.get('email') || '').toString().trim();
+  const subject = (data.get('subject') || '').toString().trim();
+  const msg = (data.get('message') || '').toString().trim();
+
+  setErr('name'); setErr('email'); setErr('subject'); setErr('message');
+
+  if (name.length < 2) { setErr('name', 'Please enter your name.'); ok = false; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setErr('email', 'A valid email, please.'); ok = false; }
+  if (subject.length < 3) { setErr('subject', 'A short subject helps.'); ok = false; }
+  if (msg.length < 10) { setErr('message', 'A few more words?'); ok = false; }
+
+  if (!ok) return;
+
+  submit.disabled = true;
+  submit.innerHTML = 'Sending…';
+  setTimeout(() => {
+    success.classList.add('is-shown');
+    submit.innerHTML = 'Sent ✓';
+    form.reset();
+    setTimeout(() => {
+      submit.disabled = false;
+      submit.innerHTML = 'Send Message <span class="arr">↗</span>';
+      success.classList.remove('is-shown');
+    }, 4500);
+  }, 900);
+});
