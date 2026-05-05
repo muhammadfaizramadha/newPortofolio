@@ -87,7 +87,7 @@ const success = document.getElementById('formSuccess');
 const setErr = (k, msg) => {
   form.querySelector(`[data-err="${k}"]`).textContent = msg || '';
 };
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
   let ok = true;
   const data = new FormData(form);
@@ -107,7 +107,16 @@ form.addEventListener('submit', (e) => {
 
   submit.disabled = true;
   submit.innerHTML = 'Sending…';
-  setTimeout(() => {
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (!res.ok) throw new Error('Network response was not ok');
+
     success.classList.add('is-shown');
     submit.innerHTML = 'Sent ✓';
     form.reset();
@@ -116,5 +125,11 @@ form.addEventListener('submit', (e) => {
       submit.innerHTML = 'Send Message <span class="arr">↗</span>';
       success.classList.remove('is-shown');
     }, 4500);
-  }, 900);
+  } catch (err) {
+    submit.disabled = false;
+    submit.innerHTML = 'Failed — try again';
+    setTimeout(() => {
+      submit.innerHTML = 'Send Message <span class="arr">↗</span>';
+    }, 3000);
+  }
 });
