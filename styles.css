@@ -588,14 +588,20 @@ section { padding: 120px 0; position: relative; }
 .skill__icon {
   width: 40px; height: 40px;
   border-radius: 8px;
-  background: var(--ink); color: var(--paper);
+  background: var(--paper-2);
+  border: 1px solid var(--paper-3);
   display: flex; align-items: center; justify-content: center;
-  font-family: var(--display); font-weight: 700; font-size: 15px;
   flex-shrink: 0;
-  transition: background 240ms ease, transform 240ms ease;
+  transition: background 240ms ease, transform 240ms ease, border-color 240ms ease;
+}
+.skill__icon img {
+  width: 22px; height: 22px;
+  object-fit: contain;
+  display: block;
 }
 .skill:hover .skill__icon {
-  background: var(--accent); transform: rotate(-6deg);
+  transform: rotate(-6deg);
+  border-color: var(--accent);
 }
 .skill__name {
   font-size: 15px; font-weight: 500; letter-spacing: -0.005em;
@@ -622,10 +628,16 @@ section { padding: 120px 0; position: relative; }
   filter: blur(12px);
 }
 .edu__eyebrow {
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--accent);
-  margin-bottom: 20px;
-  display: inline-block;
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ffffffaa;
+  margin-bottom: 24px;
+}
+.edu__eyebrow::before {
+  content: ""; width: 28px; height: 1px;
+  background: #ffffff55;
 }
 .edu__degree {
   font-family: var(--display);
