@@ -803,4 +803,10 @@ section { padding: 120px 0; position: relative; }
   .exp__type, .exp__arrow { display: none; }
   .form__row { grid-template-columns: 1fr; }
   .hero__caption { display: none; }
+  .exp__detail-grid {
+    grid-template-columns: 1fr; gap: 0;
+  }
+  .exp__detail-grid > div:first-child { display: none; }
+  .exp__detail-list { max-width: 100%; }
+  .exp__row.is-open .exp__detail { max-height: 1200px; }
 }
