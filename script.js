@@ -71,7 +71,6 @@ document.querySelectorAll('#projFilter .filter-chip').forEach(chip => {
 
 // ---- CV stub ----
 document.getElementById('downloadCv').addEventListener('click', (e) => {
-  e.preventDefault();
   const btn = e.currentTarget;
   const original = btn.innerHTML;
   btn.innerHTML = 'Preparing… <span class="arr">↓</span>';
