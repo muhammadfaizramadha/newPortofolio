@@ -229,6 +229,11 @@ section { padding: 120px 0; position: relative; }
   width: 100%; height: 100%;
   object-fit:fill;
   display: block;
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1), filter 500ms ease;
+}
+.hero__portrait:hover .hero__portrait-img {
+  transform: scale(1.04);
+  filter: saturate(1.08) brightness(1.02);
 }
 .hero__portrait .portrait-tag {
   position: absolute; right: 16px; bottom: 16px;
@@ -238,6 +243,11 @@ section { padding: 120px 0; position: relative; }
   background: rgba(1,1,1,0.45);
   padding: 6px 10px; border-radius: 99px;
   backdrop-filter: blur(6px);
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1), background 300ms ease;
+}
+.hero__portrait:hover .portrait-tag {
+  transform: translateY(-2px);
+  background: var(--accent);
 }
 .hero__caption {
   position: absolute;
@@ -359,7 +369,17 @@ section { padding: 120px 0; position: relative; }
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1), filter 500ms ease;
+  filter: saturate(0.92);
+  cursor: zoom-in;
 }
+.about__visual-img:hover {
+  transform: scale(1.06);
+  filter: saturate(1.08) brightness(1.03);
+}
+.about__visual-img:nth-child(1) { transition-delay: 0ms; }
+.about__visual-img:nth-child(2) { transition-delay: 30ms; }
+.about__visual-img:nth-child(3) { transition-delay: 60ms; }
 
 /* ---- Experience ---- */
 .exp__head {
