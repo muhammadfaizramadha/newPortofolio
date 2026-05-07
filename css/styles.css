@@ -794,6 +794,34 @@ section { padding: 120px 32px; position: relative; }
   margin: 0;
 }
 
+/* ---- Marker highlight (one-shot, fires on first entry, never reverses) ---- */
+.mh-marker {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+.mh-marker__bg {
+  position: absolute;
+  inset: 0 -0.1em;
+  background: var(--accent);
+  transform-origin: left center;
+  transform: scaleX(0);
+  z-index: 0;
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1) 1500ms;
+}
+.mh-marker__text {
+  position: relative;
+  z-index: 1;
+  color: var(--ink);
+  transition: color 280ms ease 1950ms;
+}
+.mh-marker.is-fired .mh-marker__bg {
+  transform: scaleX(1);
+}
+.mh-marker.is-fired .mh-marker__text {
+  color: var(--paper);
+}
+
 .m-hero__footer {
   display: flex;
   justify-content: space-between;

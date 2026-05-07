@@ -43,6 +43,20 @@ if (mHero) {
   mhIo.observe(mHero);
 }
 
+// ---- Marker highlight — one-shot, fires once and never reverses ----
+const marker = document.querySelector('.mh-marker');
+if (marker) {
+  const markerIo = new IntersectionObserver((entries, obs) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        marker.classList.add('is-fired');
+        obs.unobserve(marker);
+      }
+    });
+  }, { threshold: 0 });
+  markerIo.observe(marker);
+}
+
 // ---- Scroll-driven hero → about transition (matches motion/react useScroll behavior) ----
 // Section1 (m-hero): scale 1 → 0.8, rotate 0 → -5deg
 // Section2 (about):  scale 0.8 → 1, rotate +5 → 0deg
