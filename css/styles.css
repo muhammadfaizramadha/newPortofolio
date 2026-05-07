@@ -26,7 +26,7 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* ---- Scroll progress ---- */
@@ -676,9 +676,20 @@ section { padding: 120px 32px; position: relative; }
   .exp__row.is-open .exp__detail { max-height: 1200px; }
 }
 
+/* ---- Scroll-stack: hero → about scroll transition ---- */
+.scroll-stack { position: relative; }
+#about {
+  z-index: 2;
+  background: var(--paper);
+  transform-origin: top center;
+  will-change: transform;
+}
+
 /* ============ MINIMALIST SPLASH ============ */
 .m-hero {
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 1;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -686,6 +697,8 @@ section { padding: 120px 32px; position: relative; }
   padding: 96px 32px 28px;
   overflow: hidden;
   background: var(--paper);
+  transform-origin: center;
+  will-change: transform;
 }
 .m-hero__main {
   flex: 1;

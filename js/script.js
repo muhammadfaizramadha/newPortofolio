@@ -43,6 +43,33 @@ if (mHero) {
   mhIo.observe(mHero);
 }
 
+// ---- Scroll-driven hero → about transition (matches motion/react useScroll behavior) ----
+// Section1 (m-hero): scale 1 → 0.8, rotate 0 → -5deg
+// Section2 (about):  scale 0.8 → 1, rotate +5 → 0deg
+// Progress 0→1 over heroH of scroll (equivalent to ['start start', 'end end'] on a 200vh container)
+const aboutEl = document.getElementById('about');
+const stackEl = document.querySelector('.scroll-stack');
+if (mHero && aboutEl && stackEl) {
+  let stackTicking = false;
+  function updateStackTransform() {
+    stackTicking = false;
+    const heroH = mHero.offsetHeight;
+    const stackTop = stackEl.getBoundingClientRect().top;
+    const p = Math.max(0, Math.min(1, -stackTop / heroH));
+    mHero.style.transform = `scale(${1 - 0.2 * p}) rotate(${-5 * p}deg)`;
+    aboutEl.style.transform = `scale(${0.8 + 0.2 * p}) rotate(${5 - 5 * p}deg)`;
+  }
+  function onStackScroll() {
+    if (!stackTicking) {
+      requestAnimationFrame(updateStackTransform);
+      stackTicking = true;
+    }
+  }
+  window.addEventListener('scroll', onStackScroll, { passive: true });
+  window.addEventListener('resize', onStackScroll);
+  updateStackTransform();
+}
+
 // ---- Experience accordion ----
 document.querySelectorAll('.exp__row').forEach(row => {
   row.addEventListener('click', () => {
