@@ -35,18 +35,6 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-// ---- Marquee ----
-const marqueeWords = [
-  'Web Development', 'Digital Transformation', 'Laravel', 'JavaScript',
-  'UI Engineering', 'Indonesia', 'Available 2026'
-];
-const track = document.getElementById('marqueeTrack');
-const buildMarquee = () => {
-  const html = marqueeWords.map(w => `<span class="marquee__item">${w}<span class="star">✦</span></span>`).join('');
-  track.innerHTML = html + html;
-};
-buildMarquee();
-
 // ---- Experience accordion ----
 document.querySelectorAll('.exp__row').forEach(row => {
   row.addEventListener('click', () => {
@@ -67,17 +55,6 @@ document.querySelectorAll('#projFilter .filter-chip').forEach(chip => {
       card.style.display = show ? '' : 'none';
     });
   });
-});
-
-// ---- CV stub ----
-document.getElementById('downloadCv').addEventListener('click', (e) => {
-  const btn = e.currentTarget;
-  const original = btn.innerHTML;
-  btn.innerHTML = 'Preparing… <span class="arr">↓</span>';
-  setTimeout(() => {
-    btn.innerHTML = 'CV ready ✓';
-    setTimeout(() => { btn.innerHTML = original; }, 1600);
-  }, 800);
 });
 
 // ---- Contact form validation ----
