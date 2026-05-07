@@ -57,6 +57,19 @@ if (marker) {
   markerIo.observe(marker);
 }
 
+// ---- Inline highlights — one-shot color shift, fires when 50%+ visible ----
+document.querySelectorAll('.ih-highlight').forEach(el => {
+  const ihIo = new IntersectionObserver((entries, obs) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-fired');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  ihIo.observe(el);
+});
+
 // ---- Scroll-driven hero → about transition (matches motion/react useScroll behavior) ----
 // Section1 (m-hero): scale 1 → 0.8, rotate 0 → -5deg
 // Section2 (about):  scale 0.8 → 1, rotate +5 → 0deg

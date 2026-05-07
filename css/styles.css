@@ -794,6 +794,15 @@ section { padding: 120px 32px; position: relative; }
   margin: 0;
 }
 
+/* ---- Inline highlight (one-shot color shift, fires on first entry) ---- */
+.ih-highlight {
+  color: inherit;
+  transition: color 1500ms ease 600ms;
+}
+.ih-highlight.is-fired {
+  color: var(--accent);
+}
+
 /* ---- Marker highlight (one-shot, fires on first entry, never reverses) ---- */
 .mh-marker {
   position: relative;
