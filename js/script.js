@@ -24,16 +24,24 @@ function onScroll() {
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
-// ---- Reveal on scroll ----
+// ---- Reveal on scroll (bidirectional — replays when scrolling back) ----
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('is-visible');
-      io.unobserve(e.target);
-    }
+    e.target.classList.toggle('is-visible', e.isIntersecting);
   });
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// ---- Minimalist hero entrance — replays on re-entry ----
+const mHero = document.querySelector('.m-hero');
+if (mHero) {
+  const mhIo = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      mHero.classList.toggle('is-shown', e.isIntersecting);
+    });
+  }, { threshold: 0 });
+  mhIo.observe(mHero);
+}
 
 // ---- Experience accordion ----
 document.querySelectorAll('.exp__row').forEach(row => {
