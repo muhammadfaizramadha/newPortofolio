@@ -794,6 +794,24 @@ section { padding: 120px 32px; position: relative; }
   margin: 0;
 }
 
+/* ---- Masked slide reveal (one-shot, words slide up from below mask) ---- */
+.msr__word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  line-height: 1;
+}
+.msr__inner {
+  display: inline-block;
+  line-height: 1;
+  transform: translateY(110%);
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--msr-i, 0) * 100ms);
+}
+.msr.is-fired .msr__inner {
+  transform: translateY(0);
+}
+
 /* ---- Inline highlight (one-shot color shift, fires on first entry) ---- */
 .ih-highlight {
   color: inherit;

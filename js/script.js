@@ -70,6 +70,19 @@ document.querySelectorAll('.ih-highlight').forEach(el => {
   ihIo.observe(el);
 });
 
+// ---- Masked slide reveals — one-shot, words slide up from below mask ----
+document.querySelectorAll('.msr').forEach(el => {
+  const msrIo = new IntersectionObserver((entries, obs) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-fired');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  msrIo.observe(el);
+});
+
 // ---- Scroll-driven hero → about transition (matches motion/react useScroll behavior) ----
 // Section1 (m-hero): scale 1 → 0.8, rotate 0 → -5deg
 // Section2 (about):  scale 0.8 → 1, rotate +5 → 0deg
