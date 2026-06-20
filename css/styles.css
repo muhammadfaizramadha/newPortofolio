@@ -29,6 +29,18 @@ body {
   overflow-x: clip;
 }
 
+::selection {
+  background: #B9FF3D;
+  color: var(--ink);
+  text-shadow: 0 0 8px rgba(185, 255, 61, 0.85), 0 0 18px rgba(0, 111, 98, 0.36);
+}
+
+::-moz-selection {
+  background: #B9FF3D;
+  color: var(--ink);
+  text-shadow: 0 0 8px rgba(185, 255, 61, 0.85), 0 0 18px rgba(0, 111, 98, 0.36);
+}
+
 /* ---- Scroll progress ---- */
 .scroll-progress {
   position: fixed; top: 0; left: 0;
